@@ -26,7 +26,7 @@ UsuariosDAO.prototype.autenticar = function(usuario, req, res){
 					res.redirect("jogo");
 				}
 				else {
-					res.render("index", {validacao: {}});
+					res.redirect("/");
 				}
 			});
 
