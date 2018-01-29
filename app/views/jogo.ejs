@@ -21,7 +21,7 @@
 				});
 
 				$("#btn_suditos").click( function(){
-					$("#msg_erros").hide();
+					$("#msg").hide();
 					$.ajax({
 						url: "/suditos",
 						method: "GET",
@@ -32,16 +32,31 @@
 				});
 
 				$("#btn_pergaminhos").click( function(){
-					$("#msg_erros").hide();
+					$("#msg").hide();
 					$.ajax({
 						url: "/pergaminhos",
 						method: "GET",
 						success: function(data){
 							$("#acoes").html(data);
+
+							clearTimeout(timerId);
+							cronometro();
 						}
 					});
 				});
 			});
+
+			var timerId = null;
+
+			function cronometro(){				
+					$(".tempo_restante").each(function(){
+						$(this).html(parseInt($this.html()) - 1);
+					});
+
+					timerId = setTimeout(function(){ cronometro(); }, 1000);
+			}
+
+			
 		</script>
 
 	</head>
@@ -58,9 +73,14 @@
 
 	    <div class="container">
 
-	    	<% if(comando_invalido) {%>
-	    		<div class="alert alert-danger" id="msg_erros">
+	    	<% if(msg == "A") {%>
+	    		<div class="alert alert-danger" id="msg">
 	    			<strong>Operação inválida! Verifique se todas as informações foram informadas!</strong>
+	    		</div>
+	    	<% }
+	    	else if(msg == "B") {%>
+	    		<div class="alert alert-success" id="msg">
+	    			<strong>Operação realizada com sucesso!</strong>
 	    		</div>
 	    	<% } %>
 			<div class="row">
