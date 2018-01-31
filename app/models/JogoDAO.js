@@ -1,3 +1,5 @@
+var ObjectID = require("mongodb").ObjectId;
+
 function JogoDAO(connection){
 	this._connection = connection();
 }
@@ -58,8 +60,31 @@ JogoDAO.prototype.acao = function(acao){
 			acao.acao_termina_em = date.getTime() + tempo;
 			collection.insert(acao);
 
-			mongoclient.close();
+			
 		});
+
+		mongoclient.collection("jogo", function(err, collection){
+
+			var moedas = acao.quantidade;
+
+			switch(parseInt(acao.acao)){
+				case 1:
+					moedas *= -2;
+					break;
+				case 2:
+					moedas *= -3;
+					break;
+				default:
+					moedas *= -1;
+			}
+
+			collection.update(
+				{usuario: acao.usuario},
+				{$inc: {moeda: moedas}}
+			);
+		});
+
+		mongoclient.close();
 	});
 }
 
@@ -76,4 +101,19 @@ JogoDAO.prototype.getAcoes = function(usuario, res){
 			mongoclient.close();
 		});
 	});
+}
+
+JogoDAO.prototype.revogar_acao = function(_id, res){
+	this._connection.open( function(err, mongoclient){
+		mongoclient.collection("acao", function(err, collection){
+			
+			collection.remove({_id: ObjectID(_id)}, function(error, result){
+				
+				res.redirect("jogo?msg=D");
+			});
+
+			mongoclient.close();
+		});
+	});
+
 }

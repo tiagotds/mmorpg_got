@@ -27,5 +27,5 @@ module.exports.cadastrar = function(application, req, res){
 
 	//geração dos parâmetors
 
-	res.send('podemos cadastrar')
+	res.render('index', {validacao: {}, usuario: {}, mensagem: "Cadastro realizado com sucesso!"});
 }

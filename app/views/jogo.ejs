@@ -50,12 +50,17 @@
 
 			function cronometro(){				
 					$(".tempo_restante").each(function(){
-						$(this).html(parseInt($this.html()) - 1);
+						var segundos = parseInt($(this).html())-1;
+						if(segundos <= 0){
+							window.location.href = "/jogo?msg=C";
+						}
+						else {
+							$(this).html(segundos);
+						}
 					});
 
-					timerId = setTimeout(function(){ cronometro(); }, 1000);
+					timerId = setTimeout('cronometro()', 1000);
 			}
-
 			
 		</script>
 
@@ -81,6 +86,16 @@
 	    	else if(msg == "B") {%>
 	    		<div class="alert alert-success" id="msg">
 	    			<strong>Operação realizada com sucesso!</strong>
+	    		</div>
+	    	<% }
+	    	else if(msg == "C") {%>
+	    		<div class="alert alert-success" id="msg">
+	    			<strong>Senhor, a atividade ordenada foi finalizada!</strong>
+	    		</div>
+	    	<% }
+	    	else if(msg == "D") {%>
+	    		<div class="alert alert-success" id="msg">
+	    			<strong>Senhor, sua ordem foi revogada!</strong>
 	    		</div>
 	    	<% } %>
 			<div class="row">

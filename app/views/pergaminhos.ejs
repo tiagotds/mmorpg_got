@@ -22,7 +22,7 @@
 			var date = new Date()
 			var segundos_restantes = (acoes[i].acao_termina_em - date.getTime())/1000;
 		%>
-		<li><%= acoes[i].quantidade %> <%= txt_acao %> - <small>restam <span class="tempo_restante"><%= Math.round(segundos_restantes) %></span> segundos - <a href="#">revogar ordem</a></small></li>
+		<li><%= acoes[i].quantidade %> <%= txt_acao %> - <small>restam <span class="tempo_restante"><%= Math.round(segundos_restantes) %></span> segundos - <a href="/revogar_acao?id_acao=<%= acoes[i]._id %>">revogar ordem</a></small></li>
 		<% } %>
 		
 	</ul>

@@ -26,7 +26,7 @@ UsuariosDAO.prototype.autenticar = function(usuario, req, res){
 					res.redirect("jogo");
 				}
 				else {
-					res.redirect("/");
+					res.render("index", {validacao: [{msg: "Usuário e/ou senha inválidos!"}], usuario: usuario, mensagem: ""});
 				}
 			});
 
